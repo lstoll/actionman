@@ -1,0 +1,14 @@
+name: 'Actionman'
+description: 'Acts on things'
+inputs:
+  github_token:
+    description: 'Token to talk to the GitHub API with. secrets.GITHUB_TOKEN reccomended'
+    required: true
+outputs:
+  time:
+    description: 'Time this ran'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ACTIONMAN_GITHUB_TOKEN: ${{ inputs.github_token }}
