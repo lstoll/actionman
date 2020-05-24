@@ -90,6 +90,7 @@ func handleKubectl(ctx context.Context, l logrus.FieldLogger, gh *github.Client,
 		if err := writeComment(ctx, l, gh, ev, "usage: /kubectl <command> <cluster>"); err != nil {
 			return err
 		}
+		return nil
 	}
 	switch args[1] {
 	case "plan":
@@ -102,14 +103,6 @@ func handleKubectl(ctx context.Context, l logrus.FieldLogger, gh *github.Client,
 		}
 	}
 
-	if strings.HasPrefix(*ev.Comment.Body, "/ping") {
-		l.Infof("Responding to /ping comment on issue %d", *ev.Issue.Number)
-		if _, _, err := gh.Issues.CreateComment(ctx, *ev.Repo.Owner.Login, *ev.Repo.Name, *ev.Issue.Number, &github.IssueComment{
-			Body: sp("PONG"),
-		}); err != nil {
-			return fmt.Errorf("posting reply comment: %v", err)
-		}
-	}
 	return nil
 }
 
